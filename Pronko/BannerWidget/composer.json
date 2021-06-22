@@ -1,0 +1,31 @@
+{
+  "name": "pronko/banner-widget",
+  "description": "Banner Widget for Magento 2",
+  "type": "magento2-module",
+  "license": "MIT",
+  "authors": [
+    {
+      "name": "Pronko Consulting",
+      "homepage": "https://www.pronkoconsulting.com/"
+    }
+  ],
+  "minimum-stability": "alpha",
+  "repositories": [
+    {
+      "type": "composer",
+      "url": "https://repo.magento.com/"
+    }
+  ],
+  "require": {
+    "magento/framework": "100.*|101.*|102.*",
+    "magento/module-widget": "100.*|101.*"
+  },
+  "autoload": {
+    "files": [
+      "registration.php"
+    ],
+    "psr-4": {
+      "Pronko\\BannerWidget\\": ""
+    }
+  }
+}
