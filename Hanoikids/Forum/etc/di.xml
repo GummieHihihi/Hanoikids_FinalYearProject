@@ -1,0 +1,18 @@
+<?xml version="1.0"?>
+<config xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" xsi:noNamespaceSchemaLocation="urn:magento:framework:ObjectManager/etc/config.xsd">
+    <!-- data collection added for the grid collection of hanoikids forum -->
+    <type name="Hanoikids\Forum\Model\ResourceModel\HanoikidsForum\Grid\Collection">
+        <arguments>
+            <argument name="mainTable" xsi:type="string">hanoikids_forum</argument>
+            <argument name="resourceModel" xsi:type="string">Hanoikids\Forum\Model\ResourceModel\HanoikidsForum</argument>
+        </arguments>
+    </type>
+    <type name="Magento\Framework\View\Element\UiComponent\DataProvider\CollectionFactory">
+        <arguments>
+            <argument name="collections" xsi:type="array">
+                <item name="hanoikids_forum_datasource" xsi:type="string">Hanoikids\Forum\Model\ResourceModel\HanoikidsForum\Grid\Collection</item>
+            </argument>
+        </arguments>
+    </type>
+    
+</config>

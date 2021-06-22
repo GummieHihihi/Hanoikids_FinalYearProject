@@ -1,0 +1,14 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<page xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
+      xsi:noNamespaceSchemaLocation="urn:magento:framework:View/Layout/etc/page_configuration.xsd"
+      layout="1column">
+    <head>
+        <title>Create a new forum post</title>
+        <css src="Hanoikids_Forum::css/createForum.css"/>
+    </head>
+    <body>
+        <referenceContainer name="content">
+            <block name="create_forum_block" class="Hanoikids\Forum\Block\Forum\CreateForum" template="Hanoikids_Forum::Create_Forum.phtml" />
+        </referenceContainer>
+    </body>
+</page>

@@ -1,0 +1,19 @@
+<widgets xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
+   xsi:noNamespaceSchemaLocation="urn:magento:module:Magento_Widget:etc/widget.xsd">
+   <widget class="Hanoikids\Homepage\Block\Widget\FavouriteProduct" id="hanoikids_Favourite_widget">
+    <label>Hanoikids Favourite product Widget</label>
+    <description>This widget display all the favourite tour of Hanoikids</description>
+    <parameters>
+        <parameter name="title" xsi:type="text" required="true" visible="true" sort_order="10">
+            <label>what do you want to share about these product ?</label>
+        </parameter>
+        <parameter name="category" xsi:type="text" required="true" visible="true" sort_order="15">
+            <label>which category you want ? </label>
+        </parameter>
+        
+    </parameters>
+
+</widget>
+
+
+</widgets>

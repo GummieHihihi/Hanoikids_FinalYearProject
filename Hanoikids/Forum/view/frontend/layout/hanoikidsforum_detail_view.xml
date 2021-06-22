@@ -1,0 +1,16 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<page xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
+      xsi:noNamespaceSchemaLocation="urn:magento:framework:View/Layout/etc/page_configuration.xsd"
+      layout="1column">
+    <head>
+        <title>Forum Details</title>
+        <css src="Hanoikids_Forum::css/DetailView.css"/>
+    </head>
+    <body>
+    
+        <referenceContainer name="content">
+        <!-- set page cache to false because I will call the customer ID by session in template -->
+            <block name="forum" class="Hanoikids\Forum\Block\Forum\View" template="Hanoikids_Forum::Forum_View.phtml" cacheable="false" />
+        </referenceContainer>
+    </body>
+</page>

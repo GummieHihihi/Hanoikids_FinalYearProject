@@ -1,0 +1,17 @@
+<?php 
+// block : Hanoikids/Forum/Forum/CreateForum
+$userID = $block->getCurrentUserID();
+// die(var_dump($userID));
+?>
+<form action="../Save/" method="post" enctype=multipart/form-data>
+	<input type="hidden" name="userID" value="<?php echo $userID; ?>">
+	<label for="fname">Forum Header: </label><br>
+	<input type="text" id="fname" name="header" cols="70" placeholder="please enter the header of your forum:"><br>
+	<label for="fname">Content: </label><br>
+	<input type="text" id="fname" name="Content" placeholder="Content of the forum" ><br>
+	<label for="lname">attachment: </label><br>
+	<input type="file" id="lname" name="attachments" placeholder="any attachment ?"><br><br>
+	<center>
+	<input type="submit" value="Submit">
+	</center>
+</form> 

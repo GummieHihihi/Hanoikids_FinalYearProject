@@ -1,0 +1,93 @@
+<?php
+/* @var Hanoikids\Forum\Block\Forum\Listing $block */
+?>
+<?php
+$userID = $block->getCurrentUserID();
+$collection = $block->getForumCollection();
+// die(var_dump($collection));
+// die(var_dump($collection->getData()));
+$objectManager = \Magento\Framework\App\ObjectManager::getInstance();
+?>
+
+<head>
+    <script src="https://ajax.googleapis.com/ajax/libs/jquery/3.5.1/jquery.min.js"></script>
+</head>
+
+<table>
+  <tr>
+    <th>Owner</th>
+    <th>Header</th>
+    <th>Likes</th>
+    <th>Dislikes</th>
+</tr>
+
+<?php
+foreach ($collection as $ForumCollection):
+    //get customer name by ID
+    $customerID = (int) $ForumCollection->getCustomer_id();
+    //get likes and dislikes of this forum
+    // die(var_dump($ForumCollection->getData()['forum_id']));
+    $objectManager = \Magento\Framework\App\ObjectManager::getInstance();
+    $forumLike_collection = $objectManager->create('Hanoikids\Forum\Model\ResourceModel\ForumLike\CollectionFactory')->create();
+    
+    $likes = $forumLike_collection->addFieldToFilter('forum_id', $ForumCollection->getData()['forum_id'])->addFieldToFilter('status', 1);
+    $likes_number = sizeof($likes->getData());
+    $forumDislike_collection = $objectManager->create('Hanoikids\Forum\Model\ResourceModel\ForumLike\CollectionFactory')->create();
+    // die(var_dump(sizeof($likes->getData())));
+    $dislikes = $forumDislike_collection->addFieldToFilter('forum_id', $ForumCollection->getData()['forum_id'])->addFieldToFilter('status', 2);
+    $dislike_number = sizeof($dislikes->getData());
+    // die(var_dump($dislike_number));
+    
+    if ($customerID == 0) {
+        $customerFirstName = "Hanoikids";
+        $customerLastName = "admin";
+    } else {
+        $customerObj = $objectManager->create('Magento\Customer\Model\Customer')
+        ->load($customerID);
+        $customerFirstName = $customerObj->getFirstname();
+        $customerLastName = $customerObj->getLastname();
+    }
+
+    ?>
+
+    <tr class='clickable_row' data-href='<?php echo $block->getStoreManager()->getStore()->getUrl('hanoikidsforum/detail/view') . 'id/' . $ForumCollection->getId(); ?>'>
+        <td><?php echo $customerFirstName . "  " . $customerLastName; ?></td>
+        <td><?php echo $ForumCollection->getHeader(); ?></td>
+        <td><?php echo $likes_number; ?></td>
+        <td><?php echo $dislike_number; ?></td>
+    </tr>
+<?php endforeach;?>
+</table>
+<input type="hidden" class="userID" value="<?php echo $userID; ?>">
+
+<center><button class="createForum" data-href='<?php echo $block->getStoreManager()->getStore()->getUrl('hanoikidsforum/forum/create'); ?>'>Create new Topic</button>
+</center>
+
+<script>
+    jQuery(document).ready(function($) {
+        $(".clickable_row").click(function() {
+            window.location = $(this).data("href");
+        });
+    });
+
+    jQuery(document).ready(function($) {
+        $(".createForum").click(function() {
+            var userID = $('.userID').val();
+            console.log(userID);
+            if(userID){
+                window.location = $(this).data("href");
+            }
+            else{
+                alert('you need to log in to proceed');
+            }
+            
+        });
+    });
+</script>
+
+<style>
+    .clickable_row:hover {
+        transform: scale(1.03);
+    }
+</style>
+

@@ -1,0 +1,14 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<page xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
+      xsi:noNamespaceSchemaLocation="urn:magento:framework:View/Layout/etc/page_configuration.xsd"
+      layout="1column">
+    <head>
+        <title>Welcome To Hanoikids Forum</title>
+        <css src="Hanoikids_Forum::css/ForumListing.css"/>
+    </head>
+    <body>
+        <referenceContainer name="content">
+            <block name="forum" class="Hanoikids\Forum\Block\Forum\Listing" template="Hanoikids_Forum::Listing_Forum.phtml" />
+        </referenceContainer>
+    </body>
+</page>

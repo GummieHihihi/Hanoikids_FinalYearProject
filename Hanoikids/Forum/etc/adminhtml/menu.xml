@@ -1,0 +1,8 @@
+<config xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" xsi:noNamespaceSchemaLocation="urn:magento:module:Magento_Backend:etc/menu.xsd">
+	<menu>
+		<add id="Hanoikids_Forum::Hanoikids_Forum" title="Manage Forum" module="Hanoikids_Forum"
+			sortOrder="40"  resource="Hanoikids_Forum::Hanoikids_Forum"/>
+		<add id="Hanoikids_Forum::Listing" title="See all request" module="Hanoikids_Forum"
+			sortOrder="99" parent="Hanoikids_Forum::Hanoikids_Forum" action="hanoikidsforum/listing/index" resource="Hanoikids_Forum::Hanoikids_Forum"/>
+		</menu>
+	</config>

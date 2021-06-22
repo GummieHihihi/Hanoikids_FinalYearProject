@@ -1,0 +1,218 @@
+<?php
+//create object manager
+$objectManager = \Magento\Framework\App\ObjectManager::getInstance();
+/* @var Hanoikids\Forum\Block\Forum\View $block */
+$forumCollection = $block->getForumCollection()->getData()[0];
+//get forum ID
+$forumID = $forumCollection['forum_id'];
+//get the owner who create this forum by ID
+$customerID = (int) $forumCollection['customer_id'];
+
+//get model of comment for this forum
+$forumComments = $block->getForumComment($forumID);
+
+//get forum header
+$header = $forumCollection['header'];
+//get likes and dislikes number
+$likeNumber = $block->getLikeNumber($forumID);
+$dislikeNumber = $block->getDislikeNumber($forumID);
+
+
+if ($customerID == 0) {
+    $customerFirstName = "";
+    $customerLastName = "Admin";
+} else {
+    $customerObj = $objectManager->create('Magento\Customer\Model\Customer')
+    ->load($customerID);
+    //get customer name
+    $customerFirstName = $customerObj->getFirstname();
+    $customerLastName = $customerObj->getLastname();
+}
+
+$content = $forumCollection['content'];
+$img = $block->getMediaUrlImage($forumCollection['attachments']);
+
+
+//check if customer log in or not , 1 is log in, 2 is not, check if current user log in or not
+$userStatus = $block->getUserStatus();
+// die(var_dump($userStatus));
+// die(var_dump($customerStatus));
+//if customer hasnt log in 
+$forum_customer_like_id = "default";
+if($userStatus == 2){
+
+}
+//customer has log in -> see if they like it or dislike it
+else{
+    // check in if this logged in customer has like this forum or not. 1is like, 2 is dislike, 0 is not like
+
+    $forum_customer_like = $block->getForumLike($block->getCurrentUserID(), $forumID);
+    // die(var_dump($forum_customer_like));
+    $hasUserLike = $forum_customer_like[0]['status'];
+    $forum_customer_like_id = $forum_customer_like[0]['ID'];
+}
+?>
+<head>
+    <script src="https://ajax.googleapis.com/ajax/libs/jquery/3.5.1/jquery.min.js"></script>
+</head>
+<input type="hidden" class="baseUrl" value="<?php echo $block->getBaseUrl(); ?>">
+<input type="hidden" id="forumID" value="<?php echo $forumID; ?>">
+<input type="hidden" id="userID" value="<?php echo $block->getCurrentUserID(); ?>">
+<input type="hidden" id="userStatus" value="<?php echo $userStatus; ?>">
+<input type="hidden" id="customerLikeId" value="<?php echo $forum_customer_like_id; ?>">
+
+<div class="body">
+    <center>
+        <div class="forum_container">
+            <div class="bigForumHeader">
+                <div class="ownerName"> <b><?php echo $customerFirstName . "  " . $customerLastName; ?></b></div>
+                <div class="forum_header"><h2><?php echo $header; ?></h2></div>
+            </div>
+            <div class="body_content">
+                <div class="forum_content"><?php echo $content; ?></div>
+                <div class="image"> <img src="<?php echo $img ?>" alt="image of customer"></div>
+            </div>
+
+            <div class="footer">
+
+                <div class="likeDiv">
+
+                    <div class="likeImg"><img src="https://dieuhau.com/wp-content/uploads/2016/10/Facebook-Like_zpszniov66a-1.png" alt=""></div>
+                    <div class="likeNumber"><?php echo $likeNumber; ?></div>
+                    <div class="dislikeImg"><img src="https://miro.medium.com/max/4000/1*f09SPIWHCzKwFfmzT_gShA.png" alt=""></div>
+                    <div class="dislikeNumber"><?php echo $dislikeNumber; ?></div>
+                    
+                </div>
+
+                <div class="buttons">
+                    <button class="buttonLike">Like</button>
+                    <button class="buttonDislike">Dislike</button>
+                    <button class="buttonComment">Comment</button>
+                </div>
+                <div class="commentSection">
+                    <?php foreach($forumComments as $forumComment): 
+                        $userIdWhoComment = $forumComment->getData('customer_id');
+                        $content = $forumComment->getData('content');
+                        $customerObj = $objectManager->create('Magento\Customer\Model\Customer')
+                        ->load($userIdWhoComment);
+                        $customerFirstName = $customerObj->getFirstname();
+                        $customerLastName = $customerObj->getLastname();
+                        ?>
+                        <div class="listComment">
+                            <div class="listComment_user"> <?php echo $customerFirstName . "  " . $customerLastName; ?></div>
+                            <div class="listComment_content"><?php echo $content ?></div>
+                        </div>
+                    <?php endforeach;?>
+                    <div class="addComment">
+                        <input type="text" class="inputComment" name="addComment">
+                        <button class="addCommentButton"><img src="https://media.istockphoto.com/vectors/send-symbol-paper-airplane-icon-stock-vector-vector-id1017196448?k=6&m=1017196448&s=612x612&w=0&h=Y6BRRlOfRCURYRCpbcMiEmH3rfjRCQBng0TIUeuYKPs="></button>
+                    </div>
+                </div>
+
+            </div>
+        </div>
+    </center>
+</div>
+
+<script>
+    //jquery not working out sideof ready function
+    jQuery(document).ready(function($) {
+        var baseUrl = $('.baseUrl').val();
+        var userStatus = $("#userStatus").val();
+        var customerLikeId = $("#customerLikeId").val();
+        //when customer click button like
+        $(".buttonLike").click(function() {
+            if(userStatus == 2){
+                alert(" you need to log in to interact");
+            }
+            else{
+                var buttonPress = "like";
+                $.ajax({
+                    url: baseUrl + 'hanoikidsforum/forum/like',
+                    data: {'customerLikeId': customerLikeId, 'button': buttonPress},
+                    type: 'post',
+                    success: function (data) {
+                        console.log(data);
+                        if(data['currentLikeStatus'] == 1){
+
+                        }
+                        $(".likeNumber").load(" .likeNumber");
+                        $(".dislikeNumber").load(" .dislikeNumber");
+                    },
+                    error: function (request, status, error) {
+                        alert("wrong");
+                    }
+                });
+            }
+        });
+
+
+        // when customer click button dislike
+        $(".buttonDislike").click(function() {
+            if(userStatus == 2){
+                alert(" you need to log in to interact");
+            }
+            else{
+                var buttonPress = "dislike";
+                $.ajax({
+                    url: baseUrl + '/hanoikidsforum/forum/like',
+                    data: {'customerLikeId': customerLikeId, 'button': buttonPress},
+                    type: 'post',
+                    success: function (data) {
+                        console.log(data);
+                        if(data['currentLikeStatus'] == 1){
+
+                        }
+                        $(".likeNumber").load(" .likeNumber");
+                        $(".dislikeNumber").load(" .dislikeNumber");
+                    },
+                    error: function (request, status, error) {
+                        alert("wrong");
+                    }
+                });
+            }
+        });
+
+        $(".buttonComment").click(function() {
+            //pop up comment section
+
+            if(userStatus == 2){
+                alert(" you need to log in to interact");
+            }
+            else{
+
+                $(".inputComment").focus();
+                
+            }
+        });
+
+        $(".addCommentButton").click(function() {
+            //pop up comment section
+
+            if(userStatus == 2){
+                alert(" you need to log in to interact");
+            }
+            else{
+                var content = $('.inputComment').val();
+                var userID = $('#userID').val();
+                var forumID = $('#forumID').val();
+                $.ajax({
+                    url: baseUrl + '/hanoikidsforum/forum/addcomment',
+                    data: {'content': content, 'userID' : userID, 'forumID': forumID},
+                    type: 'post',
+                    success: function (data) {
+                        alert(" thanks for your comment");
+                        console.log(data['userName']);
+                         $(".commentSection").append( "<div class='listComment'><div class='listComment_user'>" + data['userName'] +"</div><div class='listComment_content'> " + data['content'] + "</div></div>" );
+                    },
+                    error: function (request, status, error) {
+                        alert("wrong");
+                        console.log(error);
+                    }
+                });
+            }
+        });
+
+    });
+</script>
+

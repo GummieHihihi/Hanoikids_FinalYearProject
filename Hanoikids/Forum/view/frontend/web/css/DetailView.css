@@ -1,0 +1,129 @@
+.likeDiv {
+    display: inline-flex;
+    margin-top: 20px;
+    margin-bottom: 20px;
+}
+
+.likeImg img {
+    height: 15px;
+}
+
+.dislikeImg img {
+    height: 15px;
+}
+
+.buttonLike img {
+    height: 10px;
+    margin-right: 10px;
+}
+
+.buttonLike{
+    background-color: transparent;
+    border: 2px solid #0099CC;
+    border-radius: 5px;
+}
+
+.buttonDislike{
+   background-color: transparent;
+   border: 2px solid #0099CC;
+   border-radius: 5px;
+}
+
+.buttonComment{
+    background-color: transparent;
+    border: 2px solid #0099CC;
+    border-radius: 5px;
+}
+
+
+
+.forum_container{
+    width: 80%;
+    border: .1725rem solid #dadce0;
+    border-style: outset;
+    border-radius: 15px;
+}
+
+.ownerName{
+    float: left;
+    padding-left: 20px;
+    margin-top: 10px;
+}
+.forum_header{
+    clear: both;
+}
+.bigForumHeader{
+    border-bottom: .1525rem solid #dadce0;
+}
+.forum_content{
+    float: left;
+    margin-left: 10px;
+    margin-top: 20px;
+    margin-bottom: 20px;
+    margin-right: 10px;
+}
+.body_content{
+    border-bottom: .1525rem solid #dadce0;
+}
+.image img{
+    width: 80%;
+    border-radius: 20px;
+}
+
+.image{
+    clear: both;
+}
+
+
+
+.addCommentButton{
+    height: 33px;
+    border-radius: 8px;
+    background-color: transparent;
+    color: white;
+    cursor: pointer;
+    margin-right: 20px;
+}
+
+.addCommentButton img{
+    width: 25px;
+    height: 20px;
+}
+
+.commentSection{
+    margin-top: 20px;
+    margin-bottom:20px;
+}
+
+.inputComment{
+    width: 70%;
+    float: left;
+    height: 30px;
+    border: none;
+    border: solid 1px #ccc;
+    border-radius: 15px;
+    margin-left: 20px;
+    margin-right: 20px;
+}
+
+.addComment{
+    display: flex;
+    margin-bottom: 20px;
+}
+
+.listComment_user{
+    float: left;
+    margin-left: 20px;
+    font-weight: bold;
+    font-size: 13px;
+}
+.listComment{
+    border-top: .0525rem solid #dadce0;
+    border-bottom: .825rem solid #dadce0;
+}
+
+.listComment_content{
+    clear: both;
+    margin-top: 30px;
+    margin-bottom: 30px;
+}

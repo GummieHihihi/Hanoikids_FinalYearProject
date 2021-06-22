@@ -1,0 +1,6 @@
+<?xml version="1.1"?>
+<config xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" xsi:noNamespaceSchemaLocation="urn:magento:framework:Event/etc/events.xsd">
+    <event name="afterCreateForum">
+        <observer name="update_Like_Dislike" instance="Hanoikids\Forum\Observer\UpdateForum" />
+    </event>
+</config>
